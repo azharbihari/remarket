@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from products.models import Category, Product
-from products.serializers import CategorySerializer, ProductSerializer
+from listings.serializers import CategorySerializer, ProductSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, BasePermission, SAFE_METHODS
 from rest_framework.parsers import MultiPartParser, FormParser

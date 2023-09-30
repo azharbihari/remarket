@@ -19,15 +19,19 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from products.views import CategoryListView
+from authentications.views import InsightAPIView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('insights/', InsightAPIView.as_view(), name='insights'),
     path('auth/', include('authentications.urls')),
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('listings/', include('listings.urls')),
     path('products/', include('products.urls')),
     path('interests/', include('interests.urls')),
     path('inquiries/', include('inquiries.urls')),
+    path('chats/', include('chats.urls')),
 ]
 
 

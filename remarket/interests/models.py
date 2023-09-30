@@ -5,7 +5,8 @@ from products.models import Product
 
 class Interest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='interests')
     is_accepted = models.BooleanField(default=False)
     message = models.TextField(
         default="I'm interested in your product. Please provide more details.")

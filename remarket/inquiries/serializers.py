@@ -3,6 +3,7 @@ from rest_framework import serializers
 from interests.models import Interest
 from rest_framework.fields import CurrentUserDefault
 from authentications.serializers import UserSerializer
+from chats.serializers import ChatSerializer
 
 
 class InquirySerializer(serializers.ModelSerializer):
@@ -10,6 +11,7 @@ class InquirySerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
     created_at = serializers.DateTimeField(
         format='%A, %B %d, %Y %I:%M %p')
+    chat = ChatSerializer()
 
     class Meta:
         model = Interest

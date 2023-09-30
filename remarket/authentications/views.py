@@ -1,3 +1,8 @@
+from datetime import date
+from interests.models import Interest
+from chats.models import Chat, Message
+from products.models import Product, Category
+from rest_framework import views
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -40,3 +45,29 @@ class UserDetailView(APIView):
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class InsightAPIView(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        total_products_listed = Product.objects.filter(
+            seller=self.request.user).count()
+        inquiry_count = Interest.objects.filter(
+            product__seller=self.request.user).count()
+
+        inquries_today = Interest.objects.filter(
+            product__seller=self.request.user, created_at__date=date.today()
+        ).count()
+
+        products_with_no_inquiries = Product.objects.filter(
+            interests__isnull=True, seller=self.request.user).count()
+        insights = {
+            'total_products_listed': total_products_listed,
+            'inquiry_count': inquiry_count,
+            'inquries_today': inquries_today,
+            'products_with_no_inquiries': products_with_no_inquiries
+        }
+
+        return Response(insights)
